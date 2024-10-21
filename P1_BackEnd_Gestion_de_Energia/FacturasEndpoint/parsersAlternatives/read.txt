@@ -1,0 +1,4 @@
+En esta carpeta, estan las diferenets pruebas de de servicios que hice con diferentes proveedores:
+- Azure 
+- Google
+- OpenAi    
