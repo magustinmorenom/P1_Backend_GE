@@ -1,7 +1,5 @@
 ## Compara la variacion del consumo con el bimestre anterior
 
-
-
 from django.db.models import Sum
 from FacturasEndpoint.models import FacturaModel
 
