@@ -1,0 +1,42 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django-cors-headers = "*"
+djangorestframework = "*"
+asgiref = "*"
+cachetools = "*"
+certifi = "*"
+charset-normalizer = "*"
+django = "*"
+faker = "*"
+google-api-core = "*"
+google-auth = "*"
+google-cloud-documentai = "*"
+googleapis-common-protos = "*"
+grpcio = "*"
+grpcio-status = "*"
+idna = "*"
+mysqlclient = "*"
+numpy = "*"
+pandas = "*"
+proto-plus = "*"
+protobuf = "*"
+pyasn1 = "*"
+pyasn1-modules = "*"
+python-dateutil = "*"
+pytz = "*"
+requests = "*"
+rsa = "*"
+six = "*"
+sqlparse = "*"
+typing-extensions = "*"
+tzdata = "*"
+urllib3 = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
