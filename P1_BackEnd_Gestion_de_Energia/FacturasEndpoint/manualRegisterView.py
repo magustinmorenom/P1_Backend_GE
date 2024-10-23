@@ -56,9 +56,11 @@ def manualRegisterView(request):
             )
             factura.save()
 
-            # Crear los registros de PagoFactura correspondientes
+
+ # Crear los registros de PagoFactura correspondientes
             PagoFactura.objects.create(
                 factura=factura,
+                suministro=suministro,
                 cuota='Primera',
                 importe_pago=factura.primer_vencimiento_importe,
                 fecha_vencimiento_1=factura.primer_vencimiento,
@@ -69,6 +71,7 @@ def manualRegisterView(request):
 
             PagoFactura.objects.create(
                 factura=factura,
+                suministro=suministro,
                 cuota='Segunda',
                 importe_pago=factura.primer_vencimiento_importe,  # Inicia con el importe del primer vencimiento
                 fecha_vencimiento_1=factura.primer_vencimiento,
