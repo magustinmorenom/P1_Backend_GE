@@ -164,6 +164,21 @@ def listFacturasView(request):
             return JsonResponse({"error": str(e)}, status=400)
     else:
         return JsonResponse({"error": "Método no permitido"}, status=405)
+    
+@csrf_exempt
+def getFacturaView(request, id_factura):
+    if request.method == 'GET':
+        try:
+            factura = FacturaModel.objects.filter(id_factura=id_factura).values()
+            if factura.exists():
+                return JsonResponse(list(factura), safe=False)
+            else:
+                return JsonResponse({"error": "Factura no encontrada"}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+    else:
+        return JsonResponse({"error": "Método no permitido"}, status=405)
+
 
 def listPagosView(request):
     if request.method == 'GET':

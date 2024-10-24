@@ -1,0 +1,9 @@
+
+cta_2_primer_vencimiento
+cta_2_primer_vencimiento_importe
+cta_2_segundo_vencimiento
+cta_2_segundo_vencimiento_importe
+primer_vencimiento
+primer_vencimiento_importe
+segundo_vencimiento
+segundo_vencimiento_importe
