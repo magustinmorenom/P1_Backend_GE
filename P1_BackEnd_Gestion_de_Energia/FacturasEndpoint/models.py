@@ -64,6 +64,30 @@ class PagoFactura(models.Model):
     class Meta:
         unique_together = ('factura', 'suministro', 'cuota')
 
+      # Nueva función para actualizar el estado del pago
+    @staticmethod
+    def actualizar_estado_pago(id_factura, id_suministro, nro_cuota, nuevo_estado, f_pago):
+        try:
+        # Imprimir en consola los parámetros con los que se va a buscar
+            print(f"Buscando en el modelo pago con id_factura: {id_factura}, id_suministro: {id_suministro}, cuota: {nro_cuota}")
+            # Obtener el pago específico que coincide con los parámetros
+            pago = PagoFactura.objects.get(
+                factura__id_factura=id_factura,
+                suministro=id_suministro,
+                cuota=nro_cuota,
+               
+            )
+            # Actualizar el estado del pago
+            pago.estado_pago = nuevo_estado
+            pago.fecha_pago = f_pago
+            pago.save()
+            return f"Estado del pago actualizado a {nuevo_estado} con éxito."
+        except PagoFactura.DoesNotExist:
+            return "No se encontró un pago con los detalles proporcionados."
+        except Exception as e:
+            return f"Ocurrió un error al actualizar el estado: {str(e)}"
+        
+    
     def save(self, *args, **kwargs):
         if self.fecha_pago:
             if self.fecha_pago <= self.fecha_vencimiento_1:

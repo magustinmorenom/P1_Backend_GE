@@ -7,6 +7,7 @@ from .manualRegisterView import listVencimientosView
 from .manualRegisterView import compararBimestreAnteriorView
 from .manualRegisterView import manualRegisterView
 from .manualRegisterView import historialConsumoView
+from .manualRegisterView import actualizarPago
 
 
 
@@ -15,11 +16,11 @@ urlpatterns = [
     path('manualRegister/', manualRegisterView, name='manualRegisterView'),
     path('listFacturas/', listFacturasView, name='listFacturasView'),
     path('listPagos/', listPagosView, name='listPagosView'),
+    path('actualizarPago/', actualizarPago, name='actualizarPago'),
     path('listVencimientos/<str:id_factura>/', listVencimientosView, name='listVencimientosView'),
     path('listPorcentajeBimestre/<str:id_factura>/', porcentajeBimestreView, name='porcentajeBimestreView'),
     path('compararBimestreAnterior/<str:id_factura>/', compararBimestreAnteriorView, name='compararBimestreAnteriorView'),
     path('historialConsumo/<str:id_suministro>/', historialConsumoView, name='historialConsumoView'),
 
+] 
 
-
-]
