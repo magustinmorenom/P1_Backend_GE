@@ -42,7 +42,6 @@ class FacturaModel(models.Model):
         return self.nombre_titular
 
 
-
 class PagoFactura(models.Model):
     
     # Relación con FacturaModel usando id_factura
@@ -52,7 +51,7 @@ class PagoFactura(models.Model):
     suministro = models.ForeignKey(SuministroModel, on_delete=models.CASCADE, related_name='pagos')
     
     cuota = models.CharField(max_length=7, choices=[('Primera', 'Primera Cuota'), ('Segunda', 'Segunda Cuota')])
-    importe_pago = models.DecimalField(max_digits=10, decimal_places=2)
+    importe_pago = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=None)  # Permitir null y poner default
     fecha_pago = models.DateField(null=True, blank=True)
     estado_pago = models.CharField(max_length=10, choices=[('Pendiente', 'Pendiente'), ('Pagado', 'Pagado'), ('Vencido', 'Vencido')], default='Pendiente')
     fecha_vencimiento_1 = models.DateField()
@@ -64,38 +63,34 @@ class PagoFactura(models.Model):
     class Meta:
         unique_together = ('factura', 'suministro', 'cuota')
 
-      # Nueva función para actualizar el estado del pago
+    # Nueva función para actualizar el estado del pago
     @staticmethod
-    def actualizar_estado_pago(id_factura, id_suministro, nro_cuota, nuevo_estado, f_pago):
+    def actualizar_estado_pago(id_factura, id_suministro, nro_cuota, nuevo_estado, f_pago, importe_pago=None):
         try:
-        # Imprimir en consola los parámetros con los que se va a buscar
+            # Imprimir en consola los parámetros con los que se va a buscar
             print(f"Buscando en el modelo pago con id_factura: {id_factura}, id_suministro: {id_suministro}, cuota: {nro_cuota}")
+            
             # Obtener el pago específico que coincide con los parámetros
             pago = PagoFactura.objects.get(
                 factura__id_factura=id_factura,
                 suministro=id_suministro,
                 cuota=nro_cuota,
-               
             )
+            
             # Actualizar el estado del pago
             pago.estado_pago = nuevo_estado
             pago.fecha_pago = f_pago
+            pago.importe_pago = importe_pago
+            print(f"Actualizando el importe_pago con: {importe_pago}")
+
             pago.save()
+
             return f"Estado del pago actualizado a {nuevo_estado} con éxito."
         except PagoFactura.DoesNotExist:
             return "No se encontró un pago con los detalles proporcionados."
         except Exception as e:
             return f"Ocurrió un error al actualizar el estado: {str(e)}"
-        
     
-    def save(self, *args, **kwargs):
-        if self.fecha_pago:
-            if self.fecha_pago <= self.fecha_vencimiento_1:
-                self.monto_pago = self.factura.primer_vencimiento_importe
-            else:
-                self.monto_pago = self.factura.segundo_vencimiento_importe
-        super(PagoFactura, self).save(*args, **kwargs)
-
     def __str__(self):
         return f'Pago {self.cuota} - Factura {self.factura.id} - Suministro {self.suministro.id}'
 

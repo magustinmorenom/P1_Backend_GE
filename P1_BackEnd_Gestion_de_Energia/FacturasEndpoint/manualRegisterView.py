@@ -86,35 +86,6 @@ def manualRegisterView(request):
     else:
         return JsonResponse({"error": "Método no permitido"}, status=405)
 
-'''
-# Vista para actualizar el estado del pago
-@csrf_exempt
-def actualizarPago(request):
-    #debug en consola
-    print("Datos recibidos en la vista:", request.body)
-    if request.method == 'POST':
-        
-       
-      # Este es el codigo que va final para recibir desde html. 
-        id_factura = request.POST.get('id_factura')
-        id_suministro = request.POST.get('id_suministro')
-        nro_cuota = request.POST.get('nro_cuota')
-        nuevo_estado = request.POST.get('nuevo_estado')
-       
-       
-       #debug en consola
-        print("Datos recibidos en la vista:", request.body)
-        print("id_factura:", id_factura)
-        print("id_suministro:", id_suministro)
-        print("nro_cuota:", nro_cuota)
-        print("nuevo_estado:", nuevo_estado)
-       
-        resultado = PagoFactura.actualizar_estado_pago(id_factura, id_suministro, nro_cuota, nuevo_estado)
-        return JsonResponse({'mensaje': resultado})
-    else:
-        return JsonResponse({'mensaje': 'Método no permitido'}, status=405)
-'''
-
 @csrf_exempt
 def actualizarPago(request):
     # Debug en consola para verificar los datos recibidos
@@ -131,6 +102,7 @@ def actualizarPago(request):
             nro_cuota = data.get('nro_cuota')
             nuevo_estado = data.get('nuevo_estado')
             fecha_pago_str = data.get('fecha_pago')
+            importe_pago = data.get('importe_pago')
             fecha_pago = datetime.datetime.strptime(fecha_pago_str, '%Y-%m-%d').date() if fecha_pago_str else None
             
             # Debug para verificar los valores extraídos
@@ -139,13 +111,14 @@ def actualizarPago(request):
             print("nro_cuota:", nro_cuota)
             print("nuevo_estado:", nuevo_estado)
             print("fecha_pago:", fecha_pago)
+            print("importe_pago:", importe_pago)
 
             # Asegúrate de que los valores existan antes de proceder
             if not all([id_factura, id_suministro, nro_cuota, nuevo_estado]):
                 return JsonResponse({'mensaje': 'Faltan datos requeridos.'}, status=400)
 
             # Aquí iría la lógica para actualizar el estado del pago...
-            resultado = PagoFactura.actualizar_estado_pago(id_factura, id_suministro, nro_cuota, nuevo_estado,fecha_pago)
+            resultado = PagoFactura.actualizar_estado_pago(id_factura, id_suministro, nro_cuota, nuevo_estado,fecha_pago,importe_pago)
             # return JsonResponse({'mensaje': resultado})
 
             return JsonResponse({'mensaje': 'Datos recibidos correctamente.', 'resultado': resultado})
