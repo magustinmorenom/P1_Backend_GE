@@ -43,15 +43,14 @@ class FacturaModel(models.Model):
 
 
 class PagoFactura(models.Model):
-    
     # Relación con FacturaModel usando id_factura
     factura = models.ForeignKey('FacturaModel', to_field='id_factura', on_delete=models.CASCADE, related_name='pagos')
-
+    
     # Relación con SuministroModel
     suministro = models.ForeignKey(SuministroModel, on_delete=models.CASCADE, related_name='pagos')
     
     cuota = models.CharField(max_length=7, choices=[('Primera', 'Primera Cuota'), ('Segunda', 'Segunda Cuota')])
-    importe_pago = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=None)  # Permitir null y poner default
+    importe_pago = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=None)
     fecha_pago = models.DateField(null=True, blank=True)
     estado_pago = models.CharField(max_length=10, choices=[('Pendiente', 'Pendiente'), ('Pagado', 'Pagado'), ('Vencido', 'Vencido')], default='Pendiente')
     fecha_vencimiento_1 = models.DateField()
@@ -62,6 +61,21 @@ class PagoFactura(models.Model):
 
     class Meta:
         unique_together = ('factura', 'suministro', 'cuota')
+
+    def save(self, *args, **kwargs):
+        # Sobrescribimos el método save para asignar los vencimientos en base a la cuota
+        if self.cuota == 'Primera':
+            # Si es la primera cuota, usamos los campos de primer vencimiento de FacturaModel
+            self.fecha_vencimiento_1 = self.factura.primer_vencimiento
+            self.fecha_vencimiento_2 = self.factura.segundo_vencimiento
+        elif self.cuota == 'Segunda':
+            # Si es la segunda cuota, usamos los campos de segundo vencimiento de FacturaModel
+            self.fecha_vencimiento_1 = self.factura.cta_2_primer_vencimiento
+            self.fecha_vencimiento_2 = self.factura.cta_2_segundo_vencimiento
+
+        # Llamamos al método save original
+        super().save(*args, **kwargs)
+
 
     # Nueva función para actualizar el estado del pago
     @staticmethod
