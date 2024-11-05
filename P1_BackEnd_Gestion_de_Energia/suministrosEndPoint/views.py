@@ -1,4 +1,6 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from .models import SuministroModel, EtiquetasSuministroModel
 from .serializers import SuministroSerializer, EtiquetasSuministroSerializer
 
@@ -9,7 +11,6 @@ class SuministroViewSet(viewsets.ModelViewSet):
 class EtiquetasSuministroViewSet(viewsets.ModelViewSet):
     queryset = EtiquetasSuministroModel.objects.all()
     serializer_class = EtiquetasSuministroSerializer
-
 
 # Esta vista está basada en viewsets de Django REST Framework, lo cual nos permite
 # gestionar de manera fácil y rápida las operaciones CRUD (Crear, Leer, Actualizar, Borrar) 
