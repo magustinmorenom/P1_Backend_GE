@@ -42,14 +42,4 @@ def listarPorcentajeBimestre(id_factura):
 id_factura = '2403235319'  # Reemplaza esto con el ID de la factura que quieres consultar
 datos = listarPorcentajeBimestre(id_factura)
 
-for dato in datos:
-    print(f"ID Suministro: {dato['id_suministro']}")
-    print(f"Nombre {dato['id_suministro__nombre_suministro']}")
-    print(f"Año: {dato['anio']}")
-    print(f"Bimestre: {dato['bimestre']}")
-    print(f"Total Factura: {dato['total_factura']}")
-    print(f"Consumo Resultante: {dato['consumo_resultante']}")
-    print(f"Porcentaje del Total: {dato['porcentaje_total']:.2f}%")
-    print(f"Ranking: {dato['ranking']}")
-    print(f"Factura: {dato['id_factura']}")
-    print('-' * 40)
+
