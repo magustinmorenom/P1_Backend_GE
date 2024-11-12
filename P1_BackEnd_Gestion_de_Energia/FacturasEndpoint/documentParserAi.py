@@ -16,47 +16,45 @@ def documentParser(image_content):
     resource_name = documentai_client.processor_path(project_id, location, processor_id)
 
     raw_document = documentai.RawDocument(content=image_content, mime_type=mime_type)
-    request = documentai.ProcessRequest(name=resource_name, raw_document=raw_document)
-    result = documentai_client.process_document(request=request)
-
+   
     # Inicializar un diccionario para los datos relevantes
     relevant_data = {
-        "anio": "",
-        "bimestre": "",
-        "consumo_resultante": "",
-        "cta_2_fecha_corte": "",
-        "cta_2_primer_vencimiento": "",
-        "cta_2_primer_vencimiento_importe": "",
-        "cta_2_segundo_vencimiento": "",
-        "cta_2_segundo_vencimiento_importe": "",
-        "detalle_facturacion": "",
-        "dias_medidos": "",
-        "domicilio_suministro": "",
-        "fecha_corte": "",
-        "fecha_emision": "",
-        "fecha_lectura_actual": "",
-        "fecha_lectura_anterior": "",
-        "id_factura": "",
-        "id_suministro": "",
-        "lectura_actual": "",
-        "lectura_anterior": "",
-        "nombre_titular": "",
-        "nro_medidor": "",
-        "primer_vencimiento": "",
-        "primer_vencimiento_importe": "",
-        "segundo_vencimiento": "",
-        "segundo_vencimiento_importe": "",
-        "tarifa": "",
-        "tipo_consumo": "",
-        "total_factura": ""
+        "anio": "2024",
+        "bimestre": "6",
+        "consumo_resultante": "156447",
+        "cta_2_fecha_corte": "06/06/2024",
+        "cta_2_primer_vencimiento": "12/05/2024",
+        "cta_2_primer_vencimiento_importe": "15090",
+        "cta_2_segundo_vencimiento": "29/05/2024",
+        "cta_2_segundo_vencimiento_importe": "15795",
+        "detalle_facturacion": "Detalle de facturación Fictisio",
+        "dias_medidos": "60",
+        "domicilio_suministro": "Calle Fantasía 123",
+        "fecha_corte": "08/05/2024",
+        "fecha_emision": "28/03/2024",
+        "fecha_lectura_actual": "28/03/2024",
+        "fecha_lectura_anterior": "25/01/2024",
+        "id_factura": "230310177834",
+        "id_suministro": "02982101",
+        "lectura_actual": "77502",
+        "lectura_anterior": "76171",
+        "nombre_titular": "AGUSTIN MORENO",
+        "nro_medidor": "310342",
+        "primer_vencimiento": "12/04/2024",
+        "primer_vencimiento_importe": "15090",
+        "segundo_vencimiento": "27/04/2024",
+        "segundo_vencimiento_importe": "15795",
+        "tarifa": "T1",
+        "tipo_consumo": "Tipo de consumo Fictisio",
+        "total_factura": "30181"
     }
     # Imprimir el resultado en la consola
-    print(result)
+    print(relevant_data)
+    print(raw_document.display_name)
     
-    # Extraer datos relevantes del resultado del procesamiento
-    for entity in result.document.entities:
-        if entity.type_ in relevant_data:
-            relevant_data[entity.type_] = entity.mention_text
+    ## En esta parte extreaeríamos perloque hacemos se le damos los datos
+    # hardcodeados para probar. 
+   
 
     return relevant_data
 
