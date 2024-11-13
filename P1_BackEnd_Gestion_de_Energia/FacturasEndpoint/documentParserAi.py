@@ -34,7 +34,7 @@ def documentParser(image_content):
         "fecha_emision": "28-03-2024",
         "fecha_lectura_actual": "28-03-2024",
         "fecha_lectura_anterior": "25-01-2024",
-        "id_factura": "230310177834",
+        "id_factura": "4398467123",
         "id_suministro": "502982101",
         "lectura_actual": "77502",
         "lectura_anterior": "76171",
