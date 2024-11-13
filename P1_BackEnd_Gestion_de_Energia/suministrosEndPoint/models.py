@@ -6,6 +6,14 @@ class SuministroModel(models.Model):
     nombre_suministro = models.CharField(max_length=255)
     geolocalizacion = models.CharField(max_length=255, null=True, blank=True)
     domicilio = models.CharField(max_length=255, null=True, blank=True)
+    nro_medidor = models.CharField(max_length=255, null=True, blank=True)
+    TARIFA_CHOICES = [
+        ('T1', 'T1'),
+        ('T2', 'T2'),
+        ('T3', 'T3'),
+        ('A', 'A'),
+    ]
+    tarifa = models.CharField(max_length=255, choices=TARIFA_CHOICES, null=True, blank=True)
 
     def __str__(self):
         return self.nombre_suministro
