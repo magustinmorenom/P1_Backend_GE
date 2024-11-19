@@ -56,8 +56,17 @@ def manualRegisterView(request):
             )
             factura.save()
 
+            # Obtener la fecha actual
+            fecha_actual = datetime.datetime.now().date()
 
- # Crear los registros de PagoFactura correspondientes
+            # Convertir las fechas de vencimiento a objetos datetime.date
+            primer_vencimiento = datetime.datetime.strptime(factura.primer_vencimiento, '%Y-%m-%d').date()
+            segundo_vencimiento = datetime.datetime.strptime(factura.segundo_vencimiento, '%Y-%m-%d').date()
+
+            # Crear los registros de PagoFactura correspondientes
+            estado_pago_primera = 'Vencido' if primer_vencimiento < fecha_actual else 'Pendiente'
+            estado_pago_segunda = 'Vencido' if segundo_vencimiento < fecha_actual else 'Pendiente'
+
             PagoFactura.objects.create(
                 factura=factura,
                 suministro=suministro,
@@ -66,7 +75,7 @@ def manualRegisterView(request):
                 fecha_vencimiento_1=factura.primer_vencimiento,
                 fecha_vencimiento_2=factura.segundo_vencimiento,
                 fecha_corte=factura.cta_2_fecha_corte,
-                estado_pago='Pendiente'
+                estado_pago=estado_pago_primera
             )
 
             PagoFactura.objects.create(
@@ -77,7 +86,7 @@ def manualRegisterView(request):
                 fecha_vencimiento_1=factura.primer_vencimiento,
                 fecha_vencimiento_2=factura.segundo_vencimiento,
                 fecha_corte=factura.cta_2_fecha_corte,
-                estado_pago='Pendiente'
+                estado_pago=estado_pago_segunda
             )
 
             return JsonResponse({"message": "Factura y pagos creados con éxito"}, status=201)
