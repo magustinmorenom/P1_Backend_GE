@@ -21,7 +21,7 @@ def send_email(email, user, password):
     html = f"""
     <html>
     <body>
-        <h1>Bienvenido a Gestion de Energia</h1>
+        <h1>Actualizacion de tus Datos en Gestion de Energia</h1>
         <p>Hola,</p>
         <p>Tu cuenta ha sido actualizada exitosamente. Aquí están tus credenciales:</p>
         <p><b>Usuario:</b> {user}</p>
